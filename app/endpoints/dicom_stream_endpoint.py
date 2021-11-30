@@ -3,10 +3,10 @@ from fastapi import APIRouter, UploadFile, File
 from app.docker_logs import get_logger
 
 router = APIRouter(
-    prefix="/endpoint_name",
+    prefix="/dicom-stream",
 )
 
-logger = get_logger("x-ray-logger")
+logger = get_logger("dicom-stream-logger")
 
 
 @router.post("/predict")

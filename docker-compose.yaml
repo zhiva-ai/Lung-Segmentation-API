@@ -2,6 +2,5 @@ version: '3.7'
 services:
   model_api:
     build: .
-#    image: <user>/<docker-image-name>:latest
     ports:
       - "8011:80"

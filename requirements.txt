@@ -1,1 +1,4 @@
-Pillow
+pydicom==2.2.2
+dicomweb-client==0.53.0
+monai==0.8.0
+torch==1.10.0+cpu

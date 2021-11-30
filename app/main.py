@@ -2,7 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from starlette.responses import RedirectResponse
 
-from app.endpoints import model_1_endpoint
+from app.endpoints import pacs_endpoint
 
 import os
 
@@ -12,8 +12,8 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 def create_app():
     app = FastAPI()
     app.include_router(
-        model_1_endpoint.router,
-        tags=["model_1_tags"],
+        pacs_endpoint.router,
+        tags=["P"],
         responses={404: {"description": "Not found"}},
     )
     return app
