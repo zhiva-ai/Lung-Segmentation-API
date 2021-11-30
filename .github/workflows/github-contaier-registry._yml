@@ -1,0 +1,28 @@
+name: Publish Docker image
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**/README.md'
+      
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**/README.md'
+
+jobs:
+  push_to_registry:
+    name: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          registry: ghcr.io
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: tugot17/fastapi-model-deployement
+          tag_with_ref: true
