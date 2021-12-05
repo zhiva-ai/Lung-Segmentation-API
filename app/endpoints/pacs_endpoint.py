@@ -29,18 +29,20 @@ async def predict(pacs_study: PACSStudy):
     )
     logger.info(f"{len(instances)} instances in series")
 
-    # (frames, width, height)
-    series_array = np.stack([i.pixel_array for i in instances], axis=0)
+    # (width, height, frames)
+    series_array = np.concatenate([i.pixel_array for i in instances], axis=-1)
 
     mapping_dict = {str(i.InstanceNumber): i.SOPInstanceUID for i in instances}
 
     masks = get_lungs_masks(series_array)
 
-    return convert_single_class_mask_to_response_json(
-        pacs_study.study_instance_uid,
-        pacs_study.series_instance_uid,
-        mapping_dict,
-        masks.transpose(2, 0, 1),
-        "Lungs",
-        "Lungs",
-    )
+    return {"Status": "success"}
+
+    # return convert_single_class_mask_to_response_json(
+    #     pacs_study.study_instance_uid,
+    #     pacs_study.series_instance_uid,
+    #     mapping_dict,
+    #     masks.transpose(2, 0, 1),
+    #     "Lungs",
+    #     "Lungs",
+    # )

@@ -24,14 +24,12 @@ transforms = Compose(
     ]
 )
 
-back_to_original_size_transforms = Compose(
-    [
+back_to_original_size_transforms = Compose([  # LoadImage(image_only=True),
         AddChannel(),
-        Spacing(pixdim=[1.0, 1.0, 1.0], mode="bilinear", align_corners=True),
+        Spacing(pixdim=[1., 1., 1.], mode="bilinear", align_corners=True),
         ScaleIntensityRange(a_min=-1000, a_max=500, b_min=0, b_max=255, clip=True),
         CropForeground(source_key="image"),
-    ]
-)
+    ])
 
 MODEL_PATH = Path(__file__).parent.joinpath("weights").joinpath("lungs_model.pt")
 
