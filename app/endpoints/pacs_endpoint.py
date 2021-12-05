@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from dicomweb_client.api import DICOMwebClient
-from app.segmentation.lungs_inference import get_lungs_masks
+from app.segmentation.lungs_segmentation_inference import get_lungs_masks
 from app.endpoints.utils import convert_single_class_mask_to_response_json
 import numpy as np
 from pydantic import BaseModel
