@@ -26,9 +26,9 @@ async def predict(
     # (frames, width, height)
     series_array = np.stack([i.pixel_array for i in instances], axis=0)
 
-    masks = get_lungs_masks(series_array)
+    mapping_dict = {i.InstanceNumber: i.SOPInstanceUID for i in instances}
 
-    mapping_dict = {}
+    masks = get_lungs_masks(series_array)
 
     return convert_single_class_mask_to_response_json(study_instance_uid,
                                                       series_instance_uid,
