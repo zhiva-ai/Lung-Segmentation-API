@@ -30,11 +30,12 @@ async def predict(
 
     masks = get_lungs_masks(series_array)
 
-    convert_single_class_mask_to_response_json(study_instance_uid,
+    result = convert_single_class_mask_to_response_json(study_instance_uid,
                                                       series_instance_uid,
                                                       mapping_dict,
                                                       masks.transpose(2, 0, 1),
                                                       "Lungs",
                                                       "Lungs")
 
-    return {"Status": "success"}
+    return result
+    # return {"Status": "success"}
