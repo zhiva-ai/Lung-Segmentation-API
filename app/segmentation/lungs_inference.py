@@ -9,13 +9,14 @@ def get_lungs_masks(ct_scan: np.ndarray):
     :param ct_scan:
     :return:
     """
+    print("CT Scan: ", ct_scan.shape)
+
     input_ = transforms(ct_scan)[0].unsqueeze(0)
 
     output_lungs = model_lungs(input_)
     output_lungs = output_lungs.argmax(dim=1).detach().cpu().numpy()
 
     print("Output lungs: ", output_lungs.shape)
-    print("CT Scan: ", ct_scan.shape)
 
     # lung_masks = get_interpolated_masks_array(ct_scan, output_lungs)
 

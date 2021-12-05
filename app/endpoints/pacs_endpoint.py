@@ -30,7 +30,7 @@ async def predict(pacs_study: PACSStudy):
     logger.info(f"{len(instances)} instances in series")
 
     # (width, height, frames)
-    series_array = np.concatenate([i.pixel_array for i in instances], axis=-1)
+    series_array = np.stack([i.pixel_array for i in instances], axis=-1)
 
     mapping_dict = {str(i.InstanceNumber): i.SOPInstanceUID for i in instances}
 
