@@ -36,10 +36,8 @@ async def predict(pacs_study: PACSStudy):
 
     # (frames, width, height)
     masks = get_lungs_masks(series_array)
-    print("Maksss: ", masks.shape)
 
     # return {"Status": "success"}
-
     return convert_single_class_mask_to_response_json(
         pacs_study.study_instance_uid,
         pacs_study.series_instance_uid,
