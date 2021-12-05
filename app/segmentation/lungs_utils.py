@@ -24,7 +24,7 @@ transforms = Compose(
     ]
 )
 
-back_to_original_size_transforms = Compose([  # LoadImage(image_only=True),
+back_to_original_size_transforms = Compose([
         AddChannel(),
         Spacing(pixdim=[1., 1., 1.], mode="bilinear", align_corners=True),
         ScaleIntensityRange(a_min=-1000, a_max=500, b_min=0, b_max=255, clip=True),
