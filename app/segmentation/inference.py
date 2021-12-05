@@ -2,12 +2,8 @@ from pathlib import Path
 
 from monai.transforms import (
     Compose,
-    LoadImage,
     AddChannel,
-    Lambda,
     Resize,
-    EnsureChannelFirst,
-    Transpose,
     Spacing,
     ScaleIntensityRange,
     CropForeground,
@@ -21,11 +17,24 @@ import cv2
 
 NUM_SLICES = 32
 
+tranform_one = Compose(
+    [
+        AddChannel(),
+    ]
+)
+
+tranform_two = Compose(
+    [
+        AddChannel(),
+        Spacing(pixdim=[0.8, 0.8, 5], mode="bilinear", align_corners=True),
+    ]
+)
+
 transforms = Compose(
     [
         AddChannel(),
         Spacing(pixdim=[0.8, 0.8, 5], mode="bilinear", align_corners=True),
-        ScaleIntensityRange(a_min=-1000, a_max=500, b_min=0, b_max=1),  # , clip=True),
+        ScaleIntensityRange(a_min=-1000, a_max=500, b_min=0, b_max=1),
         CropForeground(source_key="image"),
         Resize((224, 224, NUM_SLICES)),
         ToTensor(),
@@ -87,8 +96,11 @@ def get_lungs_masks(ct_scan: np.ndarray):
     :param ct_scan:
     :return:
     """
-    print("Kształt:")
-    print(ct_scan.shape)
+    print(f"Input shape: {ct_scan.shape}")
+    print(f"First transform shape: {tranform_one(ct_scan).shape}")
+    print(f"Second transform shape: {tranform_two(ct_scan).shape}")
+    print(f"Final transform shape: {transforms(ct_scan).shape}")
+
     input_ = transforms(ct_scan)[0].unsqueeze(0)
 
     output_lungs = model_lungs(input_)
