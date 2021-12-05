@@ -2,7 +2,7 @@
 # Lung segmentation API
 API serving the lungs predictions for chest CT DICOM images. 
 
-We use the Nvidia clara lungs model segmentation model, avalible [here](https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation).
+We use the Nvidia Clara lungs 3D semanticsegmentation model, avalible [here](https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation).
 
 
 API takes a CT scan, samples 32 samples from it and conducts 3D semantic segmentation. 
