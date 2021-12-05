@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from dicomweb_client.api import DICOMwebClient
 from app.segmentation.inference import get_lungs_masks
+from app.endpoints.utils import convert_single_class_mask_to_response_json
 import numpy as np
 
 from app.docker_logs import get_logger
@@ -27,4 +28,11 @@ async def predict(
 
     masks = get_lungs_masks(series_array)
 
-    return {"message": masks.shape}
+    mapping_dict = {}
+
+    return convert_single_class_mask_to_response_json(study_instance_uid,
+                                                      series_instance_uid,
+                                                      mapping_dict,
+                                                      masks.transpose(1, 2, 0),
+                                                      "Lungs",
+                                                      "Lungs")

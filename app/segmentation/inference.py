@@ -90,4 +90,6 @@ def get_lungs_masks(ct_scan: np.ndarray):
 
     lung_masks = get_interpolated_masks_array(ct_scan, output_lungs)
 
+    print(f"Predicton masks: {lung_masks}")
+
     return lung_masks
