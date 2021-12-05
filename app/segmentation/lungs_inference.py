@@ -21,8 +21,8 @@ def get_lungs_masks(ct_scan: np.ndarray):
     # lung_masks = get_interpolated_masks_array(ct_scan, output_lungs)
 
     # print("First interpolation:", lung_masks.shape)
-
-    lung_masks = get_properly_interpolated_masks_array(output_lungs, ct_scan.shape[0])
+    width, height, number_of_frames = ct_scan.shape
+    lung_masks = get_properly_interpolated_masks_array(output_lungs, width, height, number_of_frames)
 
     print("First interpolation:", lung_masks.shape)
 
