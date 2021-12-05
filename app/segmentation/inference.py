@@ -96,10 +96,10 @@ def get_lungs_masks(ct_scan: np.ndarray):
     :param ct_scan:
     :return:
     """
-    print(f"Input shape: {ct_scan.shape}")
-    print(f"First transform shape: {tranform_one(ct_scan).shape}")
-    print(f"Second transform shape: {tranform_two(ct_scan).shape}")
-    print(f"Final transform shape: {transforms(ct_scan).shape}")
+#    print(f"Input shape: {ct_scan.shape}")
+#    print(f"First transform shape: {tranform_one(ct_scan).shape}")
+#    print(f"Second transform shape: {tranform_two(ct_scan).shape}")
+#    print(f"Final transform shape: {transforms(ct_scan).shape}")
 
     input_ = transforms(ct_scan)[0].unsqueeze(0)
 
