@@ -14,6 +14,8 @@ def convert_single_class_mask_to_response_json(
 ) -> dict:
     rois_in_series = {}
 
+    print(f"Maks shape in convert: {masks.shape}")
+
     for i in range(masks.shape[0]):
         single_mask = {
             "points": masks[i].tolist(),
