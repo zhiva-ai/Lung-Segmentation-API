@@ -69,13 +69,13 @@ def get_interpolated_masks_array(
     for idx in range(original_image.shape[-1]):
         # mask interpolation
         masks_index_fr = (idx / (original_image.shape[-1] - 1)) * (
-            output_lungs.shape[-1] - 1
+            prediction_output.shape[-1] - 1
         )
         mi_a, mi_b = int(math.floor(masks_index_fr)), int(math.ceil(masks_index_fr))
         d = masks_index_fr - mi_a
 
-        if not output_lungs.dtype == np.uint8:
-            output_lungs = np.array(output_lungs, dtype=np.uint8)
+        if not prediction_output.dtype == np.uint8:
+            prediction_output = np.array(prediction_output, dtype=np.uint8)
 
         output_a = prediction_output[0, ..., mi_a]
         output_b = prediction_output[0, ..., mi_b]
