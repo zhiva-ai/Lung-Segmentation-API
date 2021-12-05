@@ -40,7 +40,10 @@ def get_interpolated_masks_array(
 
 
 def get_properly_interpolated_masks_array(
-        prediction_output: np.ndarray, number_of_frames: int
+        prediction_output: np.ndarray,
+        width: int,
+        height: int,
+        number_of_frames: int
 ) -> np.ndarray:
     masks = []
 
@@ -58,7 +61,7 @@ def get_properly_interpolated_masks_array(
         output_a = prediction_output[0, ..., mi_a]
         output_b = prediction_output[0, ..., mi_b]
         output_ = output_a.astype(float) * (1.0 - d) + output_b.astype(float) * d
-        output_ = np.round(cv2.resize(output_, prediction_output.shape[1:3]))
+        output_ = np.round(cv2.resize(output_, (width, height)))
 
         masks.append(output_)
 
