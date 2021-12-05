@@ -87,7 +87,8 @@ def get_lungs_masks(ct_scan: np.ndarray):
     :param ct_scan:
     :return:
     """
-
+    print("Kształt:")
+    print(ct_scan.shape)
     input_ = transforms(ct_scan)[0].unsqueeze(0)
 
     output_lungs = model_lungs(input_)
