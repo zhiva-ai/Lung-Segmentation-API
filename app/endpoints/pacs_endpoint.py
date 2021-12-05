@@ -34,15 +34,17 @@ async def predict(pacs_study: PACSStudy):
 
     mapping_dict = {str(i.InstanceNumber): i.SOPInstanceUID for i in instances}
 
+    # (frames, width, height)
     masks = get_lungs_masks(series_array)
+    print("Maksss: ", masks.shape)
 
-    return {"Status": "success"}
+    # return {"Status": "success"}
 
-    # return convert_single_class_mask_to_response_json(
-    #     pacs_study.study_instance_uid,
-    #     pacs_study.series_instance_uid,
-    #     mapping_dict,
-    #     masks.transpose(2, 0, 1),
-    #     "Lungs",
-    #     "Lungs",
-    # )
+    return convert_single_class_mask_to_response_json(
+        pacs_study.study_instance_uid,
+        pacs_study.series_instance_uid,
+        mapping_dict,
+        masks,
+        "Lungs",
+        "Lungs",
+    )
