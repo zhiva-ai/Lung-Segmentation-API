@@ -33,6 +33,6 @@ async def predict(
     return convert_single_class_mask_to_response_json(study_instance_uid,
                                                       series_instance_uid,
                                                       mapping_dict,
-                                                      masks.transpose(1, 2, 0),
+                                                      masks.transpose(2, 0, 1),
                                                       "Lungs",
                                                       "Lungs")
