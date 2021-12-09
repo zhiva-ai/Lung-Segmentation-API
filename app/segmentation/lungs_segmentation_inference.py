@@ -33,8 +33,10 @@ lungs_model = Ahnet(
     spatial_dims=3, psp_block_num=0, upsample_mode="trilinear", out_channels=2
 )
 lungs_model.load_state_dict(torch.load(LUNGS_MODEL_PATH, map_location="cpu"))
+lungs_model.eval()
 
 
+@torch.no_grad()
 def get_lungs_masks(ct_scan: np.ndarray):
     """
 
