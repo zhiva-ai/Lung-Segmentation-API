@@ -37,11 +37,14 @@ lungs_model.eval()
 
 
 @torch.no_grad()
-def get_lungs_masks(ct_scan: np.ndarray):
+def get_lungs_masks(ct_scan: np.ndarray) -> np.ndarray:
     """
-
-    :param ct_scan:
-    :return:
+    Given an np.array of frames from a CT scan, the method returns the lung segmentation for each frame.
+    Nvidia clara model available here: https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation
+    is used for inference. The 32 frames are sampled from the input DICOM and used as model input.
+    The masks for the remaining frames are then interpolated.
+    :param ct_scan: # (width, height, frames) array from a DICOM image, the pixel values ranges from 0 up to 4096
+    :return: (frames, width, height) array of 0s and 1s with the segmented lungs
     """
 
     input_ = lungs_transforms(ct_scan)[0].unsqueeze(0)

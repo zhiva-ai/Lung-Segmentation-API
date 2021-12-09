@@ -22,6 +22,13 @@ logger = get_logger("pacs-endpoint-logger")
 
 @router.post("/predict")
 async def predict(pacs_study: PACSStudy):
+    """
+    Lung segmentation endpoint. Takes the PACS server address, study and series UIDs as input,
+    retrieves the DICOM image and provides it as input for the lung segmentation model. The mask predictions in the
+    json is returned
+    :param pacs_study: Json with server_address, study_instance_uid, series_instance_uid
+    :return: json in the specified format
+    """
     client = DICOMwebClient(url=pacs_study.server_address)
     instances = client.retrieve_series(
         study_instance_uid=pacs_study.study_instance_uid,
