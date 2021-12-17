@@ -1,6 +1,7 @@
 import numpy as np
 from time import time
 from app.docker_logs import get_logger
+import orjson
 
 logger = get_logger("serialization-logger")
 
@@ -14,7 +15,7 @@ def convert_single_class_mask_to_response_json(
     color="lightskyblue",
     class_color="lightskyblue",
     active_color="aquamarine",
-) -> dict:
+) -> bytes:
     json_start = time()
 
     rois_in_series = {}
@@ -40,4 +41,4 @@ def convert_single_class_mask_to_response_json(
     json_end = time()
     logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
-    return final_dict
+    return orjson.dumps(final_dict)
