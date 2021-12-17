@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 
 url = "localhost:8011/pacs-endpoint/predict"
 
@@ -14,9 +15,13 @@ params = {
 }
 
 if __name__ == '__main__':
-    result = requests.post(url, json=params)
+    start = time.time()
+
+    result = requests.get(url, params=params)
     params = result.json()
     with open("data.json", "w") as f:
         json.dump(params, f)
 
-    print(params)
+    end = time.time()
+    print(f"Duration: {end-start} s.")
+    # print(params)
