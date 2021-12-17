@@ -1,6 +1,8 @@
 import numpy as np
 from time import time
-from app.endpoints.pacs_endpoint import logger
+from app.docker_logs import get_logger
+
+logger = get_logger("serialization-logger")
 
 def convert_single_class_mask_to_response_json(
     study_instance_uid: str,
