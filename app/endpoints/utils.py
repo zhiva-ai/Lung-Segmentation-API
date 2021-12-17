@@ -1,5 +1,6 @@
 import numpy as np
-
+from time import time
+from app.endpoints.pacs_endpoint import logger
 
 def convert_single_class_mask_to_response_json(
     study_instance_uid: str,
@@ -12,6 +13,8 @@ def convert_single_class_mask_to_response_json(
     class_color="lightskyblue",
     active_color="aquamarine",
 ) -> dict:
+    json_start = time()
+
     rois_in_series = {}
 
     for i in range(masks.shape[0]):
@@ -31,5 +34,8 @@ def convert_single_class_mask_to_response_json(
         rois_in_series[mapping[frame_number]] = {"segments": segments}
 
     final_dict = {study_instance_uid: {series_instance_uid: rois_in_series}}
+
+    json_end = time()
+    logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
     return final_dict

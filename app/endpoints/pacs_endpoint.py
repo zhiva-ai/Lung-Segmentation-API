@@ -34,14 +34,17 @@ async def predict(
     :param series_instance_uid:
     :return: json in the specified format
     """
+    download_start = time()
     client = DICOMwebClient(url=server_address)
     instances = client.retrieve_series(
         study_instance_uid=study_instance_uid,
         series_instance_uid=series_instance_uid,
     )
     logger.info(f"{len(instances)} instances in series")
+    download_end = time()
+    logger.info(f"Download duration: {download_end - download_start} s.")
 
-    start = time()
+    inference_start = time()
     # (width, height, frames)
     series_array = np.stack([i.pixel_array for i in instances], axis=-1)
 
@@ -49,8 +52,8 @@ async def predict(
 
     # (frames, width, height)
     masks = get_lungs_masks(series_array)
-    end = time()
-    logger.info(f"Inference duration: {end-start} s.")
+    inference_end = time()
+    logger.info(f"Inference duration: {inference_end-inference_start} s.")
 
     # return {"Status": "success"}
     return convert_single_class_mask_to_response_json(
