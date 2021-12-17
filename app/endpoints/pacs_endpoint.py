@@ -6,7 +6,7 @@ import numpy as np
 from pydantic import BaseModel
 from app.docker_logs import get_logger
 from time import time
-from fastapi.responses import UJSONResponse, ORJSONResponse
+from fastapi.responses import ORJSONResponse
 
 
 class PACSStudy(BaseModel):
