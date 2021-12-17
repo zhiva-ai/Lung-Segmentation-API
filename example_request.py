@@ -18,11 +18,11 @@ if __name__ == '__main__':
     start = time.time()
 
     result = requests.get(url, params=params)
-    params = result.json()
-    end = time.time()
 
+    end = time.time()
     print(f"Request duration: {end-start} s.")
 
+    params = result.json()
     with open("data.json", "w") as f:
         json.dump(params, f)
 
