@@ -20,7 +20,7 @@ router = APIRouter(
 logger = get_logger("pacs-endpoint-logger")
 
 
-@router.post("/predict")
+@router.get("/predict")
 async def predict(pacs_study: PACSStudy):
     """
     Lung segmentation endpoint. Takes the PACS server address, study and series UIDs as input,
