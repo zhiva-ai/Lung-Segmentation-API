@@ -2,7 +2,7 @@ import json
 import requests
 import time
 
-url = "localhost:8011/pacs-endpoint/predict"
+url = "0.0.0.0:8011/pacs-endpoint/predict"
 
 server_address = "https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs"
 study_instance_uid = "1.3.6.1.4.1.25403.345050719074.3824.20170125095438.5"
