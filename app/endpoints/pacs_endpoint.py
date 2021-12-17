@@ -6,6 +6,7 @@ import numpy as np
 from pydantic import BaseModel
 from app.docker_logs import get_logger
 from time import time
+from fastapi.responses import UJSONResponse
 
 
 class PACSStudy(BaseModel):
@@ -21,7 +22,7 @@ router = APIRouter(
 logger = get_logger("pacs-endpoint-logger")
 
 
-@router.get("/predict")
+@router.get("/predict", response_class=UJSONResponse)
 async def predict(
     server_address: str, study_instance_uid: str, series_instance_uid: str
 ):
