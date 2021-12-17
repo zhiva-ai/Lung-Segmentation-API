@@ -5,6 +5,7 @@ from app.endpoints.utils import convert_single_class_mask_to_response_json
 import numpy as np
 from pydantic import BaseModel
 from app.docker_logs import get_logger
+from time import time
 
 
 class PACSStudy(BaseModel):
@@ -40,6 +41,7 @@ async def predict(
     )
     logger.info(f"{len(instances)} instances in series")
 
+    start = time()
     # (width, height, frames)
     series_array = np.stack([i.pixel_array for i in instances], axis=-1)
 
@@ -47,6 +49,8 @@ async def predict(
 
     # (frames, width, height)
     masks = get_lungs_masks(series_array)
+    end = time()
+    logger.info(f"Inference duration: {end-start} s.")
 
     # return {"Status": "success"}
     return convert_single_class_mask_to_response_json(
