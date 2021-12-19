@@ -50,6 +50,7 @@ def get_lungs_masks(ct_scan: np.ndarray) -> np.ndarray:
     input_ = lungs_transforms(ct_scan)[0].unsqueeze(0)
 
     output_lungs = lungs_model(input_)
+    # (batch_size, num_classes, width, height, frames) -> (batch_size, num_classes, frames, width, height)
     output_lungs = output_lungs.permute(0, 1, 4, 2, 3)
 
     output_lungs_interpolated = F.interpolate(
