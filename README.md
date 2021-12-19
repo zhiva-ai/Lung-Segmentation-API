@@ -17,6 +17,12 @@ mask for each frame and this is returned as a `.json` file.
 docker-compose up
 ```
 
+API avalible at:
+
+```
+0.0.0.0:8011
+```
+
 # How to test it? 
 Query the API with an example CT scan by running: 
 
