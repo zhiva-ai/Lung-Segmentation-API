@@ -13,8 +13,6 @@ from monai.transforms import (
 )
 import torch.nn.functional as F
 
-from app.segmentation.utils import get_interpolated_and_resized_masks
-
 NUM_SLICES = 32
 
 lungs_transforms = Compose(
@@ -47,21 +45,22 @@ def get_lungs_masks(ct_scan: np.ndarray) -> np.ndarray:
     :param ct_scan: # (width, height, frames) array from a DICOM image, the pixel values ranges from 0 up to 4096
     :return: (frames, width, height) array of 0s and 1s with the segmented lungs
     """
+    width, height, number_of_frames = ct_scan.shape
 
     input_ = lungs_transforms(ct_scan)[0].unsqueeze(0)
 
     output_lungs = lungs_model(input_)
     output_lungs = output_lungs.permute(0, 1, 4, 2, 3)
-    # output_lungs = output_lungs.argmax(dim=1).detach().cpu().numpy()
 
-    width, height, number_of_frames = ct_scan.shape
-    # lung_masks = get_interpolated_and_resized_masks(
-    #     output_lungs, width, height, number_of_frames
-    # )
+    output_lungs_interpolated = F.interpolate(
+        output_lungs,
+        size=(number_of_frames, width, height),
+        mode="trilinear",
+        align_corners=True,
+    )
 
-    output_lungs_interpolated = F.interpolate(output_lungs, size=(number_of_frames, width, height), mode='trilinear',
-                                              align_corners=True)
-    lung_masks = torch.argmax(output_lungs_interpolated[0], 0).cpu().numpy().astype(np.uint8)
+    lung_masks = (
+        torch.argmax(output_lungs_interpolated[0], 0).cpu().numpy().astype(np.uint8)
+    )
 
     return lung_masks
-
