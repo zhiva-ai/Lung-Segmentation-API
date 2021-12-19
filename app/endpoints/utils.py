@@ -41,13 +41,13 @@ def convert_single_class_mask_to_response_json(
     final_dict = {study_instance_uid: {series_instance_uid: rois_in_series}}
 
     json_end = time()
-    logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
     with open(PREDICTION_NAME, 'w') as fp:
         json.dump(final_dict, fp)
 
     with open(PREDICTION_NAME, 'rb') as fp:
         final_dict = json.load(fp)
+    logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
     return orjson.dumps(final_dict)
 
