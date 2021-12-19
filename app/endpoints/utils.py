@@ -2,8 +2,10 @@ import numpy as np
 from time import time
 from app.docker_logs import get_logger
 import orjson
+import json
 
 logger = get_logger("serialization-logger")
+PREDICTION_NAME = "prediction.json"
 
 def convert_single_class_mask_to_response_json(
     study_instance_uid: str,
@@ -41,29 +43,11 @@ def convert_single_class_mask_to_response_json(
     json_end = time()
     logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
-    final_dict = recursive_dict(final_dict)
+    with open(PREDICTION_NAME, 'w') as fp:
+        json.dump(final_dict, fp)
+
+    with open(PREDICTION_NAME, 'rb') as fp:
+        final_dict = json.load(fp)
 
     return orjson.dumps(final_dict)
 
-
-def recursive_dict(d):
-    for k, v in d.items():
-        if isinstance(v, dict):
-            recursive_dict(v)
-        else:
-            d = replace_str(d)
-    return d
-
-def replace_str(final_dict):
-    for key in final_dict.keys():
-        if type(key) is not str:
-            try:
-                final_dict[str(key)] = final_dict[key]
-            except:
-                try:
-                    final_dict[repr(key)] = final_dict[key]
-                except:
-                    pass
-            del final_dict[key]
-
-    return final_dict
