@@ -1,26 +1,21 @@
 import numpy as np
-from time import time
 from app.docker_logs import get_logger
-from typing import Dict
 import orjson
 
 logger = get_logger("serialization-logger")
 
 
 def convert_single_class_mask_to_response_json(
-    study_instance_uid: str,
-    series_instance_uid: str,
-    mapping: dict,
-    masks: np.ndarray,
-    class_name="Lung",
-    description="Lung",
-    color="lightskyblue",
-    class_color="lightskyblue",
-    active_color="aquamarine",
-) -> Dict:
-
-    json_start = time()
-
+        study_instance_uid: str,
+        series_instance_uid: str,
+        mapping: dict,
+        masks: np.ndarray,
+        class_name="Lung",
+        description="Lung",
+        color="lightskyblue",
+        class_color="lightskyblue",
+        active_color="aquamarine",
+) -> bytes:
     rois_in_series = {}
 
     for i in range(masks.shape[0]):
@@ -40,12 +35,4 @@ def convert_single_class_mask_to_response_json(
         rois_in_series[mapping[frame_number]] = {"segments": segments}
 
     final_dict = {study_instance_uid: {series_instance_uid: rois_in_series}}
-
-    json_end = time()
-
-    logger.info(f"Jsonization duration: {json_end - json_start} s.")
-
-    return final_dict
-
-    # return orjson.dumps(final_dict)
-
+    return orjson.dumps(final_dict)
