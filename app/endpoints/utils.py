@@ -1,11 +1,11 @@
 import numpy as np
 from time import time
 from app.docker_logs import get_logger
+from typing import Dict
 import orjson
-import json
 
 logger = get_logger("serialization-logger")
-PREDICTION_NAME = "prediction.json"
+
 
 def convert_single_class_mask_to_response_json(
     study_instance_uid: str,
@@ -17,7 +17,8 @@ def convert_single_class_mask_to_response_json(
     color="lightskyblue",
     class_color="lightskyblue",
     active_color="aquamarine",
-) -> bytes:
+) -> Dict:
+
     json_start = time()
 
     rois_in_series = {}
@@ -40,15 +41,11 @@ def convert_single_class_mask_to_response_json(
 
     final_dict = {study_instance_uid: {series_instance_uid: rois_in_series}}
 
-    # with open(PREDICTION_NAME, 'w') as fp:
-    #     json.dump(final_dict, fp)
-    #
-    # with open(PREDICTION_NAME, 'rb') as fp:
-    #     final_dict = json.load(fp)
-
     json_end = time()
 
     logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
-    return orjson.dumps(final_dict)
+    return final_dict
+
+    # return orjson.dumps(final_dict)
 
