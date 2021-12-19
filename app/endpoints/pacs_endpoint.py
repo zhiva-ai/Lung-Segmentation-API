@@ -49,7 +49,7 @@ async def predict(
     # (width, height, frames)
     series_array = np.stack([i.pixel_array for i in instances], axis=-1)
 
-    mapping_dict = {str(i.InstanceNumber): i.SOPInstanceUID for i in instances}
+    mapping_dict = {str(i.InstanceNumber): str(i.SOPInstanceUID) for i in instances}
 
     # (frames, width, height)
     masks = get_lungs_masks(series_array)
