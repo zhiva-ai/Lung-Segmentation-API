@@ -59,7 +59,7 @@ def get_lungs_masks(ct_scan: np.ndarray) -> np.ndarray:
     #     output_lungs, width, height, number_of_frames
     # )
 
-    output_lungs_interpolated = F.interpolate(output_lungs, size=(number_of_frames, width, height), mode='trilinear',
+    output_lungs_interpolated = F.interpolate(output_lungs, size=(number_of_frames, width, height), mode='bilinear',
                                               align_corners=True)
     lung_masks = torch.argmax(output_lungs_interpolated[0], 0)
 
