@@ -3,16 +3,9 @@ from dicomweb_client.api import DICOMwebClient
 from app.segmentation.lungs_segmentation_inference import get_lungs_masks
 from app.endpoints.utils import convert_single_class_mask_to_response_json
 import numpy as np
-from pydantic import BaseModel
 from app.docker_logs import get_logger
 from time import time
 from fastapi.responses import ORJSONResponse
-
-
-class PACSStudy(BaseModel):
-    server_address: str
-    study_instance_uid: str
-    series_instance_uid: str
 
 
 router = APIRouter(
@@ -46,13 +39,14 @@ async def predict(
     logger.info(f"Download duration: {download_end - download_start} s.")
 
     inference_start = time()
-    # (width, height, frames)
-    series_array = np.stack([i.pixel_array for i in instances], axis=-1)
 
     mapping_dict = {str(i.InstanceNumber): str(i.SOPInstanceUID) for i in instances}
 
+    # (width, height, frames)
+    series_array = np.stack([i.pixel_array for i in instances], axis=-1)
     # (frames, width, height)
     masks = get_lungs_masks(series_array)
+
     inference_end = time()
     logger.info(f"Inference duration: {inference_end-inference_start} s.")
 
