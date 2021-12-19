@@ -41,4 +41,15 @@ def convert_single_class_mask_to_response_json(
     json_end = time()
     logger.info(f"Jsonization duration: {json_end - json_start} s.")
 
+    for key in final_dict.keys():
+        if type(key) is not str:
+            try:
+                final_dict[str(key)] = final_dict[key]
+            except:
+                try:
+                    final_dict[repr(key)] = final_dict[key]
+                except:
+                    pass
+            del final_dict[key]
+
     return orjson.dumps(final_dict)
