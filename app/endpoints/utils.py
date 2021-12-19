@@ -6,15 +6,15 @@ logger = get_logger("serialization-logger")
 
 
 def convert_single_class_mask_to_response_json(
-        study_instance_uid: str,
-        series_instance_uid: str,
-        mapping: dict,
-        masks: np.ndarray,
-        class_name="Lung",
-        description="Lung",
-        color="lightskyblue",
-        class_color="lightskyblue",
-        active_color="aquamarine",
+    study_instance_uid: str,
+    series_instance_uid: str,
+    mapping: dict,
+    masks: np.ndarray,
+    class_name="Lung",
+    description="Lung",
+    color="lightskyblue",
+    class_color="lightskyblue",
+    active_color="aquamarine",
 ) -> bytes:
     rois_in_series = {}
 
