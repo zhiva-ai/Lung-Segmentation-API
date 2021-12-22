@@ -23,6 +23,11 @@ API avalible at:
 0.0.0.0:8011
 ```
 
+# FAQ
+- I'm getting an error on MacBook `docker rpc error code = unknown desc = executor failed running [...]`.
+
+Your docker settings are limiting the size of the image and cannot install all the `requirements.txt`. Go to `Preferences > Resources > Advanced` in your `Docker Desktop` application and increase the memory limit.
+
 # How to test it? 
 Query the API with an example CT scan by running: 
 
