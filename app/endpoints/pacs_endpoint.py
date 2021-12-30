@@ -1,11 +1,16 @@
 from fastapi import APIRouter
-from dicomweb_client.api import DICOMwebClient
 from app.segmentation.lungs_segmentation_inference import get_lungs_masks
 from app.endpoints.utils import convert_single_class_mask_to_response_json
-import numpy as np
+from fastapi.responses import ORJSONResponse
+from pydantic import BaseModel
 from app.docker_logs import get_logger
 from time import time
-from fastapi.responses import ORJSONResponse
+from typing import List
+import numpy as np
+import io
+import pydicom
+import json
+
 
 
 router = APIRouter(
@@ -15,32 +20,37 @@ router = APIRouter(
 logger = get_logger("pacs-endpoint-logger")
 
 
-@router.get("/predict", response_class=ORJSONResponse)
+class Item(BaseModel):
+    instances: List[str]
+
+
+@router.post("/predict", response_class=ORJSONResponse)
 async def predict(
-    server_address: str, study_instance_uid: str, series_instance_uid: str
+    item: Item
 ):
     """
     Lung segmentation endpoint. Takes the PACS server address, study and series UIDs as input,
     retrieves the DICOM image and provides it as input for the lung segmentation model. The mask predictions in the
     json is returned
-    :param server_address:
-    :param study_instance_uid:
-    :param series_instance_uid:
+    :param item:
     :return: json in the specified format
     """
+
     download_start = time()
-    client = DICOMwebClient(url=server_address)
-    instances = client.retrieve_series(
-        study_instance_uid=study_instance_uid,
-        series_instance_uid=series_instance_uid,
-    )
+    instances = [
+        pydicom.dcmread(io.BytesIO(bytes(json.loads(instance))))
+        for instance in item.instances
+    ]
     logger.info(f"{len(instances)} instances in series")
     download_end = time()
-    logger.info(f"Download duration: {download_end - download_start} s.")
+    logger.info(f"Parse duration: {download_end - download_start} s.")
 
     inference_start = time()
 
     mapping_dict = {str(i.InstanceNumber): str(i.SOPInstanceUID) for i in instances}
+
+    study_instance_uid = str(instances[0].StudyInstanceUID)
+    series_instance_uid = str(instances[0].SeriesInstanceUID)
 
     # (width, height, frames)
     series_array = np.stack([i.pixel_array for i in instances], axis=-1)
