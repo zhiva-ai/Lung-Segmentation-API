@@ -23,6 +23,8 @@ logger = get_logger("pacs-endpoint-logger")
 class Item(BaseModel):
     instances: List[str]
 
+def get_instance_number(instance):
+    return instance.InstanceNumber
 
 @router.post("/predict", response_class=ORJSONResponse)
 async def predict(
@@ -41,6 +43,7 @@ async def predict(
         pydicom.dcmread(io.BytesIO(bytes(json.loads(instance))))
         for instance in item.instances
     ]
+    instances.sort(key=get_instance_number)
     logger.info(f"{len(instances)} instances in series")
     download_end = time()
     logger.info(f"Parse duration: {download_end - download_start} s.")
