@@ -9,7 +9,7 @@ API takes a CT scan, samples 32 samples from it and conducts 3D semantic segment
 After that ot interpolate the predictions between the samples to achieve a segmentation 
 mask for each frame and this is returned as a `.json` file.  
 
-<img src="assets/visualization.png" width="600px"/>
+<img src="assets/lung-segmentation-visualisation.webp" width="700px"/>
 
 # How to run the API 
 
