@@ -11,8 +11,6 @@ import io
 import pydicom
 import json
 
-
-
 router = APIRouter(
     prefix="/pacs-endpoint",
 )
@@ -23,12 +21,10 @@ logger = get_logger("pacs-endpoint-logger")
 class Item(BaseModel):
     instances: List[str]
 
-def get_instance_number(instance):
-    return instance.InstanceNumber
 
 @router.post("/predict", response_class=ORJSONResponse)
 async def predict(
-    item: Item
+        item: Item
 ):
     """
     Lung segmentation endpoint. Takes the PACS server address, study and series UIDs as input,
@@ -43,7 +39,7 @@ async def predict(
         pydicom.dcmread(io.BytesIO(bytes(json.loads(instance))))
         for instance in item.instances
     ]
-    instances.sort(key=get_instance_number)
+    instances.sort(key=lambda instance: instance.InstanceNumber)
     logger.info(f"{len(instances)} instances in series")
     download_end = time()
     logger.info(f"Parse duration: {download_end - download_start} s.")
@@ -61,7 +57,7 @@ async def predict(
     masks = get_lungs_masks(series_array)
 
     inference_end = time()
-    logger.info(f"Inference duration: {inference_end-inference_start} s.")
+    logger.info(f"Inference duration: {inference_end - inference_start} s.")
 
     # return {"Status": "success"}
     return convert_single_class_mask_to_response_json(
