@@ -14,7 +14,7 @@ params = {
     "series_instance_uid": series_instance_uid,
 }
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start = time.time()
 
     result = requests.get(url, params=params)

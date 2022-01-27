@@ -1,9 +1,7 @@
 import numpy as np
-from typing import Tuple, Dict, Any
-
+from typing import Dict, Any
 from app.docker_logs import get_logger
 import orjson
-from pydicom.dataset import FileDataset
 
 logger = get_logger("serialization-logger")
 
@@ -45,6 +43,3 @@ def convert_single_class_mask_to_json_response(
         }
     }
     return orjson.dumps(final_dict)
-
-
-

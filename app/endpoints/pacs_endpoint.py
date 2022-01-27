@@ -1,5 +1,8 @@
 from fastapi import APIRouter
-from app.segmentation.lung_segmentation.lungs_segmentation_inference import get_lungs_masks, lung_segmentation_inference
+from app.segmentation.lung_segmentation.lungs_segmentation_inference import (
+    get_lungs_masks,
+    lung_segmentation_inference,
+)
 from app.endpoints.utils import (
     convert_single_class_mask_to_json_response,
 )
