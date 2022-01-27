@@ -1,10 +1,9 @@
 from fastapi import APIRouter
 from app.segmentation.lung_segmentation.lungs_segmentation_inference import (
-    get_lungs_masks,
     lung_segmentation_inference,
 )
 from app.endpoints.utils import (
-    convert_single_class_mask_to_json_response,
+    convert_lungs_prediction_to_json_response,
 )
 from fastapi.responses import ORJSONResponse
 from pydantic import BaseModel
@@ -19,7 +18,7 @@ router = APIRouter(
     prefix="/pacs-endpoint",
 )
 
-logger = get_logger("pacs-endpoint-logger")
+logger = get_logger("lungs-segmentation-endpoint-logger")
 
 
 class Item(BaseModel):
@@ -52,7 +51,7 @@ async def predict(item: Item):
     logger.info(f"Inference duration: {inference_end - inference_start} s.")
 
     # return {"Status": "success"}
-    return convert_single_class_mask_to_json_response(
+    return convert_lungs_prediction_to_json_response(
         study_instance_uid,
         series_instance_uid,
         mapping_dict,

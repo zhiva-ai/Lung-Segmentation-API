@@ -6,7 +6,7 @@ import orjson
 logger = get_logger("serialization-logger")
 
 
-def convert_single_class_mask_to_json_response(
+def convert_lungs_prediction_to_json_response(
     study_instance_uid: str,
     series_instance_uid: str,
     mapping: dict,
