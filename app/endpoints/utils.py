@@ -1,15 +1,19 @@
 import numpy as np
+from typing import Tuple, Dict, Any
+
 from app.docker_logs import get_logger
 import orjson
+from pydicom.dataset import FileDataset
 
 logger = get_logger("serialization-logger")
 
 
-def convert_single_class_mask_to_response_json(
+def convert_single_class_mask_to_json_response(
     study_instance_uid: str,
     series_instance_uid: str,
     mapping: dict,
     masks: np.ndarray,
+    series_metadata: Dict[str, Any],
     class_name="Lung",
     description="Lung",
     color="lightskyblue",
@@ -34,5 +38,13 @@ def convert_single_class_mask_to_response_json(
 
         rois_in_series[mapping[frame_number]] = {"segments": segments}
 
-    final_dict = {study_instance_uid: {series_instance_uid: rois_in_series}}
+    final_dict = {
+        study_instance_uid: {
+            series_instance_uid: rois_in_series,
+            "metadata": series_metadata,
+        }
+    }
     return orjson.dumps(final_dict)
+
+
+
