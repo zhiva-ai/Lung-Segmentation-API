@@ -35,7 +35,7 @@ def lung_segmentation_inference(
     # a (number of pixels classified as "lung") times
     # (pixel spacing in x axis) times (pixel spacing in y axis)
     # times slice thickness
-    lung_volume_cm = (
+    lung_volume_cm = int(
         np.sum(lung_masks)
         * pixel_spacing_x_cm
         * pixel_spacing_y_cm
