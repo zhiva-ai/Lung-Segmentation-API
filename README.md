@@ -1,13 +1,16 @@
 [![](https://images.microbadger.com/badges/license/nbrown/revealjs.svg)](LICENSE)
 # Lung segmentation API
-API serving the lungs predictions for chest CT DICOM images. 
+API that returns lung segmentations for DICOM chest CT images and calculates lung volumes. 
 
-We use the Nvidia Clara lungs 3D semanticsegmentation model, avalible [here](https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation).
+We use the Nvidia Clara lungs 3D semantic segmentation model, available [here](https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation).
+
+The API takes a CT scan, extracts 32 samples from it, and performs 3D semantic segmentation. It then interpolates the
+predictions between the samples to produce a segmentation mask for each frame and calculates the lung volume based on the DICOM metadata. 
+The final result is returned as a `.json` file. 
+To learn more about the structure see the [documentation](https://docs.zhiva.ai/latest/segmentation#get%2Fsegmentations%2F%7Bmodel-uid%7D%2Fstudies%2F%7Bstudy-uid%7D%2Fseries%2F%7Bseries-uid%7D)
 
 
-API takes a CT scan, samples 32 samples from it and conducts 3D semantic segmentation. 
-After that ot interpolate the predictions between the samples to achieve a segmentation 
-mask for each frame and this is returned as a `.json` file.  
+  
 
 <img src="assets/lung-segmentation-visualisation.webp" width="700px"/>
 
