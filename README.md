@@ -29,13 +29,8 @@ API avalible at:
 Your docker settings are limiting the size of the image and cannot install all the `requirements.txt`. Go to `Preferences > Resources > Advanced` in your `Docker Desktop` application and increase the memory limit.
 
 # How to test it? 
-Query the API with an example CT scan by running: 
-
-```
-python example_request.py
-```
-
-and the API output should be saved as `data.json`
+Follow the official [tutorial](https://docs.zhiva.ai/latest). You need to configure a proxy server that will route requests 
+from the [viewer](https://alpha.zhiva.ai/login) to the model API. 
 
 # Authors
 - [Piotr Mazurek](https://github.com/tugot17)
