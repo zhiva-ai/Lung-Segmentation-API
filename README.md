@@ -33,7 +33,4 @@ Your docker settings are limiting the size of the image and cannot install all t
 
 # How to test it? 
 Follow the official [tutorial](https://docs.zhiva.ai/latest). You need to configure a proxy server that will route requests 
-from the [viewer](https://alpha.zhiva.ai/login) to the model API. 
-
-# Authors
-- [Piotr Mazurek](https://github.com/tugot17)
+from the [viewer](https://alpha.zhiva.ai/login) to the model API.
