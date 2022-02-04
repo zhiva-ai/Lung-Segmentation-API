@@ -15,7 +15,7 @@ import pydicom
 import json
 
 router = APIRouter(
-    prefix="/pacs-endpoint",
+    prefix="/lungs-segmentation-endpoint",
 )
 
 logger = get_logger("lungs-segmentation-endpoint-logger")

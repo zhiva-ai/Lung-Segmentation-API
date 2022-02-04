@@ -34,3 +34,15 @@ Your docker settings are limiting the size of the image and cannot install all t
 # How to test it? 
 Follow the official [tutorial](https://docs.zhiva.ai/latest). You need to configure a proxy server that will route requests 
 from the [viewer](https://alpha.zhiva.ai/login) to the model API.
+
+You will need to add the endpoint to `models.json` file in [model-proxy](https://github.com/zhiva-ai/model-proxy-example)
+
+```yaml
+{
+  "d4e548ad-f365-4c34-918b-4e61a8b896f0": {
+    "uri": "http://localhost:8011/lungs-segmentation-endpoint/predict",
+    "supports": ["/studies/series"],
+    "task": "segmentation"
+  }
+}
+```
