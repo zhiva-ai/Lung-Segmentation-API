@@ -36,10 +36,11 @@ def convert_lungs_prediction_to_json_response(
 
         rois_in_series[mapping[frame_number]] = {"segments": segments}
 
+    rois_in_series["metadata"] = [series_metadata]
+
     final_dict = {
         study_instance_uid: {
             series_instance_uid: rois_in_series,
-            "metadata": [series_metadata],
         }
     }
     return orjson.dumps(final_dict)
