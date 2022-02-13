@@ -14,29 +14,23 @@ import io
 import pydicom
 import json
 
-router = APIRouter(
-    prefix="/lungs-segmentation-endpoint",
-)
+router = APIRouter()
 
 logger = get_logger("lungs-segmentation-endpoint-logger")
 
 
-class Item(BaseModel):
-    instances: List[str]
-
-
-@router.post("/predict", response_class=ORJSONResponse)
-async def predict(item: Item):
+@router.post("/segmentation", response_class=ORJSONResponse)
+async def predict(items: List[str]):
     """
     Lung lung_segmentation endpoint. Takes the PACS server address, study and series UIDs as input,
     retrieves the DICOM image and provides it as input for the lung lung_segmentation model. The mask predictions in the
     json is returned
-    :param item:
+    :param items:
     :return: json in the specified format
     """
     instances = [
         pydicom.dcmread(io.BytesIO(bytes(json.loads(instance))))
-        for instance in item.instances
+        for instance in items
     ]
     logger.info(f"{len(instances)} instances in series")
 

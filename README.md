@@ -40,7 +40,7 @@ You will need to add the endpoint to `models.json` file in [model-proxy](https:/
 ```yaml
 {
   "d4e548ad-f365-4c34-918b-4e61a8b896f0": {
-    "uri": "http://localhost:8011/lungs-segmentation-endpoint/predict",
+    "uri": "http://localhost:8011/segmentation",
     "supports": ["/studies/series"],
     "task": "segmentation"
   }
