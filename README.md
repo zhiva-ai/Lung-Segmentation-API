@@ -2,7 +2,7 @@
 # Lung segmentation API
 API that returns lung segmentations for DICOM chest CT images and calculates lung volumes. 
 
-We use the Nvidia Clara lungs 3D semantic segmentation model, available [here](https://ngc.nvidia.com/catalog/models/nvidia:med:clara_pt_covid19_ct_lung_segmentation).
+We use the Nvidia Clara lungs 3D semantic segmentation model, available [here](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/med/models/clara_train_covid19_ct_lung_seg).
 
 The API takes a CT scan, extracts 32 samples from it, and performs 3D semantic segmentation. It then interpolates the
 predictions between the samples to produce a segmentation mask for each frame and calculates the lung volume based on the DICOM metadata. 
