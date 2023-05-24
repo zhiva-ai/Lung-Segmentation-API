@@ -16,14 +16,6 @@ To learn more about the structure see the [documentation](https://docs.zhiva.ai/
 
 # How to run the API 
 
-Download the weights and put them in the weights directory
-
-```
-cd app/segmentation/lung_segmentation/weights/
-
-wget --content-disposition https://api.ngc.nvidia.com/v2/models/nvidia/med/clara_train_covid19_ct_lung_seg/versions/1/zip -O clara_train_covid19_ct_lung_seg_1.zip
-```
-
 ```
 docker-compose up
 ```
@@ -47,7 +39,7 @@ You will need to add the endpoint to `models.json` file in [model-proxy](https:/
 
 ```yaml
 {
-  "d4e548ad-f365-4c34-918b-4e61a8b896f0": {
+  "1d9508dd-9089-40c3-abdd-15f47120d682": {
     "uri": "http://localhost:8011/segmentation",
     "supports": ["/studies/series"],
     "task": "segmentation"
